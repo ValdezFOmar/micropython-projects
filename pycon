@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+#
+# Simple script for loading scripts in a Pico W with Micropython using rshell
+
+port='/dev/ttyACM0'
+
+# Connect to board 
+conn()
+{
+    rshell --quiet --port "$port"
+}
+
+# Connect to board REPL
+repl()
+{
+    rshell --quiet --port "$port" repl
+}
+
+# Destroy all functions and vars from this script
+desc()
+{
+    unset port
+
+    funcs=(conn clean load show repl remove desc)
+    for func in "${funcs[@]}"
+    do
+        unset -f "$func"
+    done
+}
+
+# Save this specified files to the board
+save()
+{
+    # Check https://gitlab.com/-/snippets/2167862
+    rshell --quiet --port "$port" cp "$@" /pyboard/
+}
+
+# List the contents of a directory
+show()
+{
+    rshell --quiet --port "$port" ls --all --long /pyboard/"$1"
+}
+
+# Remove a file from the board
+remove()
+{
+    if [ -z "$1" ]
+    then
+        echo "No files provide"
+        return 1
+    fi
+    rshell --quiet --port "$port" rm /pyboard/"$1"
+}
+
+# Remove ALL files from the board
+clean()
+{
+    rshell --quiet --port "$port" rm -r /pyboard/*
+}
+
+main()
+{
+    if ! command -v rshell &> /dev/null
+    then
+        echo "pycon: rshell command not found"
+        desc
+        return 1
+    fi
+    unset -f main
+}
+
+main
