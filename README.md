@@ -35,7 +35,7 @@ Estos paquetes permiten una mejor experiencia para programar en micorpython:
 2.  [`stubs`](https://github.com/Josverl/micropython-stubs) para micropython: Estos son archivos que representan la interfaz de los modulos, funciones,
     metodos, clases, etc. implementados en micropython. Ofrecen documentación y una mejor integración con
     analizadores estaticos y linters.
-3.  [`picozero`](https://picozero.readthedocs.io/en/latest/): Una libreria para facilitar la comunicación con componentes lectronicos.
+3.  [`picozero`](https://picozero.readthedocs.io/en/latest/): Una libreria para facilitar la comunicación con componentes electronicos y sensores.
 
 ### Extra
 
