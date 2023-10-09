@@ -1,5 +1,6 @@
 {
     "stubPath": ".venv/lib/python3.11/site-packages",
+    "reportUnusedExpression": true,
     "reportMissingModuleSource": false,
     "reportPrivateUsage": true,
     "reportConstantRedefinition": true
