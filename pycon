@@ -21,7 +21,7 @@ desc()
 {
     unset port
 
-    funcs=(conn clean load show repl remove desc)
+    funcs=(conn clean save show repl remove desc)
     for func in "${funcs[@]}"
     do
         unset -f "$func"
@@ -32,7 +32,7 @@ desc()
 save()
 {
     # Check https://gitlab.com/-/snippets/2167862
-    rshell --quiet --port "$port" cp "$@" /pyboard/
+    rshell --quiet --port "$port" cp --recursive --all "$@" /pyboard/
 }
 
 # List the contents of a directory
@@ -52,10 +52,10 @@ remove()
     rshell --quiet --port "$port" rm /pyboard/"$1"
 }
 
-# Remove ALL files from the board
+# Remove ALL files from the board, except for directories
 clean()
 {
-    rshell --quiet --port "$port" rm -r /pyboard/*
+    rshell --quiet --port "$port" rm /pyboard/*
 }
 
 main()
