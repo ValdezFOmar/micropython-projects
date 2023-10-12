@@ -1,5 +1,9 @@
 {
-    "stubPath": "typings",
+    "include": "./projects",
+    "extraPaths": [
+        "./lib"
+    ],
+    "stubPath": "./typings",
     "reportUnusedExpression": true,
     "reportMissingModuleSource": false,
     "reportPrivateUsage": true,
