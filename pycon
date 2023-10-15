@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
 # Simple script for loading scripts in a Pico W with Micropython using rshell
+# TODO: Rewrite script in Python (tests/rshell_script/pycon.py)
 
 port='/dev/ttyACM0'
 
@@ -16,12 +17,39 @@ repl()
     rshell --quiet --port "$port" repl
 }
 
+# Do a soft reset on the pico (re-run main.py)
+softreset()
+{
+    rshell --quiet --port "$port" repl "
+        ~ import machine
+        ~ machine.soft_reset()
+        ~
+        "
+}
+
+# Run the passed script in the Pico W
+# Note: You need to be in the same directory than the file
+run()
+{
+    file="$1"
+    save "$file"
+
+    module=$(python -c "print('$file'.removesuffix('.py'))")
+    rshell --quiet --port "$port" repl "
+        ~ import $module
+        ~ func = ${module}.main if 'main' in ${module}.__dict__ else print
+        ~ func()
+        ~
+        "
+
+}
+
 # Destroy all functions and vars from this script
 desc()
 {
     unset port
 
-    funcs=(conn clean save show repl remove desc)
+    funcs=(conn clean save show repl remove desc run softreset)
     for func in "${funcs[@]}"
     do
         unset -f "$func"

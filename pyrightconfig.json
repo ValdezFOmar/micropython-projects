@@ -4,8 +4,12 @@
         "./lib"
     ],
     "stubPath": "./typings",
+    "typeCheckingMode": "basic",
     "reportUnusedExpression": true,
     "reportMissingModuleSource": false,
     "reportPrivateUsage": true,
-    "reportConstantRedefinition": true
+    "reportConstantRedefinition": true,
+
+    "reportUndefinedVariable": "information",
+    "reportUnboundVariable": "information"
 }
