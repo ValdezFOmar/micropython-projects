@@ -72,8 +72,12 @@ def main():
     ssid = getenv("SSID")
     passwd = getenv("PASSWORD")
 
-    server = Server()
-    server.connect_wlan(ssid, passwd)
+    wlan = connect_wlan(ssid, passwd)
+    while True:
+        if wlan.isconnected():
+            break
+
+    server = Server(wlan.ifconfig()[0])
 
     server.open_socket()
     try:

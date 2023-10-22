@@ -42,6 +42,7 @@ class AnimatedFrames:
         def play_frames(t):
             for frame in self.frames:
                 display.blit(frame.buffer, x, y)
+                display.show()
                 sleep(time_between_frames)
 
         time_between_frames = self.duration / len(self.frames)

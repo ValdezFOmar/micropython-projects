@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pico W Server</title>
+  <style>
+    :root {
+      font: sans-serif;
+      font-size: 10px;
+      box-sizing: border-box;
+    }
+
+    * {
+      box-sizing: inherit;
+    }
+
+    body {
+      margin: 0 auto;
+      max-width: 600px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin: 0 0 1rem;
+      padding-top: 1rem;
+      text-align: center;
+    }
+
+    main {
+      font-size: 2rem;
+    }
+
+    .container {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: row;
+    }
+
+    form {
+      flex-grow: 1;
+      font-size: calc(10vw);
+    }
+
+    input {
+      aspect-ratio: 1/1;
+      height: 100%;
+      margin: 0 auto;
+      font: inherit;
+      border-radius: 10%;
+      border-style: groove;
+      display: block;
+    }
+
+    p {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Pico W Server</h1>
+    <p>Presiona un boton para cambiar el estado del LED.</p>
+    <div class="container">
+      <form action="./on">
+        <input type="submit" value="ON" />
+      </form>
+      <form action="./off">
+        <input type="submit" value="OFF">
+      </form>
+    </div>
+  </main>
+</body>
+
+</html>
