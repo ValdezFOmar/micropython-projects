@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pico W Server</title>
+  <style>
+    :root {
+      font: sans-serif;
+      font-size: 10px;
+      color: white;
+      background-color: #09090C;
+    }
+
+    body {
+      margin: 0 auto;
+      max-width: 600px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin: 0 0 1rem;
+      padding-top: 1rem;
+      text-align: center;
+    }
+
+    main {
+      font-size: 2rem;
+    }
+
+    form {
+      display: flex;
+      align-content: center;
+      margin-top: 1rem;
+    }
+
+    input {
+      font-size: inherit;
+      margin: auto;
+    }
+
+    p {
+      text-align: center;
+    }
+
+    .mermaid svg {
+      margin: 1em auto;
+      display: block;
+    }
+  </style>
+  <script type="module" defer>
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+  </script>
+</head>
+
+<body>
+  <main>
+    <h1>Embeded Web Server (Pico W)</h1>
+    <p>Here is a mermaid diagram:</p>
+    <pre class="mermaid">
+%% Diagrama de secuencia
+%% Por Rene Solis
+%%
+%% PicoW es un WebServer y el OLED display aparece la IP, hay animacion diversa durante la corrida de su solución.
+%%
+sequenceDiagram
+    participant Usuario
+    participant RaspberryPiPico as Pico
+    participant OLEDDisplay as Display
+    participant Red
+
+    Usuario->>Pico: Encender
+    Pico->>Display: Inicializar Display
+    Display->>Pico: Display Inicializado
+    Pico->>Red: Intentar Conexión
+    Red->>Pico: Conexión Exitosa
+    Pico->>Display: Animar Iconos
+    Pico->>Display: Mostrar IP Address
+    Red->>Pico: Error de Conexión
+    Pico->>Display: Mostrar Error de Conexión Animado
+    loop Mantenimiento de Conexión
+        Pico->>Red: Verificar Conexión
+        Red->>Pico: Estado de Conexión
+        Pico->>Display: Actualizar Display
+    end
+%% En si el usuario puede no apagar la PicoW es  opcional
+    Usuario->>Pico: Apagar
+    Pico->>Display: Apagar Display
+    Display->>Pico: Confirmar Apagado
+    Pico->>Red: Desconectar
+    Red->>Pico: Confirmar Desconexión
+    Pico->>Usuario: Apagar
+    </pre>
+  </main>
+</body>
+</html>

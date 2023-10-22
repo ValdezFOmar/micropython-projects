@@ -1,90 +1,20 @@
 import socket
-from time import sleep
 
 import network
 
-_template = """<!DOCTYPE html>
-<html>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pico W Server</title>
-  <style>
-    :root {
-      font: sans-serif;
-      font-size: 10px;
-    }
-
-    body {
-      margin: 0 auto;
-      max-width: 600px;
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin: 0 0 1rem;
-      padding-top: 1rem;
-      text-align: center;
-    }
-
-    main {
-      font-size: 2rem;
-    }
-
-    form {
-      display: flex;
-      align-content: center;
-      margin-top: 1rem;
-    }
-
-    input {
-      font-size: inherit;
-      margin: auto;
-    }
-  </style>
-</head>
-
-<body>
-  <main>
-    <h1>Pico W Example Template</h1>
-    <p>This is a html template example for a simple embeded server on a raspberry pi pico w.</p>
-    <form action="./action-1">
-      <input type="submit" value="Action 1" />
-    </form>
-    <form action="./action-2">
-      <input type="submit" value="Action 2" />
-    </form>
-    <form action="./action-3">
-      <input type="submit" value="Action 3" />
-    </form>
-  </main>
-</body>
-
-</html>"""
+def connect_wlan(ssid: str, password: str) -> network.WLAN:
+    wlan = network.WLAN(network.STA_IF)
+    wlan.active(True)
+    wlan.connect(ssid, password)
+    return wlan
 
 
 class Server:
-    def __init__(self, port=80) -> None:
-        self.ssid = None
-        self.wlan = None
-        self.ip = None
+    def __init__(self, ip: str, port=80) -> None:
+        self.ip = ip
         self.port = port
-        self.html = _template
-
-    def connect_wlan(self, ssid: str, password: str) -> str:
-        self.wlan = network.WLAN(network.STA_IF)
-        self.wlan.active(True)
-        self.wlan.connect(ssid, password)  # IP
-
-        while not self.wlan.isconnected():
-            print("Waiting for connection...")
-            sleep(1)
-
-        self.ip = self.wlan.ifconfig()[0]
-        self.ssid = ssid
-
-        return self.ip
+        self.html = ""
 
     def open_socket(self):
         address = (self.ip, self.port)
