@@ -1,4 +1,5 @@
 import socket
+from time import sleep
 
 import network
 
@@ -8,6 +9,17 @@ def connect_wlan(ssid: str, password: str) -> network.WLAN:
     wlan.active(True)
     wlan.connect(ssid, password)
     return wlan
+
+
+def handle_connection(wlan: network.WLAN, tries: int) -> str:
+    for _ in range(tries):
+        if wlan.isconnected():
+            break
+        sleep(1)
+
+    if wlan.status() != network.STAT_GOT_IP:
+        raise RuntimeError("Timeout reached. Failed to connect.")
+    return wlan.ifconfig()[0]
 
 
 class Server:
