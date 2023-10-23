@@ -10,6 +10,7 @@ class OpenAIRequest:
 
     def __init__(self, api_key: str) -> None:
         self._api_key = api_key
+        self.waiting_for_request = False
 
     def get_chatgpt_response(self, promp: str) -> str:
         response = self.make_openai_resquest(promp)
@@ -37,8 +38,11 @@ class OpenAIRequest:
             "temperature": 0.7,
         }
 
-        return requests.post(
+        self.waiting_for_request = True
+        response = requests.post(
             self.OPEN_AI_URL,
             json=post_data,
             headers=headers,
         )
+        self.waiting_for_request = False
+        return response
