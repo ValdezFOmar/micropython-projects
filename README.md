@@ -6,7 +6,7 @@ Proyectos de micropython para la clase **Sistemas Programables**, impartida por 
 ## Material utilizado
 
 - Raspberry Pi Pico W
-- Micropython v1.20
+- Micropython v1.21
 - Display OLED SSD1306
 - Protoboard
 - Cables, LEDs y equipo de electronica en general
