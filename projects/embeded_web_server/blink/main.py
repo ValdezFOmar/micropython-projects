@@ -13,23 +13,25 @@ from micropython import const
 def handle_connection_animation(wlan: network.WLAN, display: SSD1306_I2C) -> str:
     x = WIFI_ANIMATION.get_width_center(display.width)
     y = WIFI_ANIMATION.get_height_center(display.height)
-    WIFI_ANIMATION.start_animation(display, x, y)
+    # WIFI_ANIMATION.start_animation(display, x, y)
     MAX_TRIES = const(15)
 
     ip = ""
     try:
         ip = handle_connection(wlan, MAX_TRIES)
     except RuntimeError:
+        # WIFI_ANIMATION.end_animation()
         display.blit(WIFI_ICON_ERROR.buffer, x, y)
         display.show()
         sys.exit()
 
-    WIFI_ANIMATION.end_animation()
-    text_x = (display.width - len(ip)) // 2
-    text_y = display.height - 8
+    # WIFI_ANIMATION.end_animation()
+    font_size = 8
+    text_x = (display.width - len(ip) * font_size) // 2
+    text_y = display.height - font_size
 
     display.blit(WIFI_ICON_FULL.buffer, x, y)
-    display.text(wlan, text_x, text_y)
+    display.text(ip, text_x, text_y)
     display.show()
 
     return ip

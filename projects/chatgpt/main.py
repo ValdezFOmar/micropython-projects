@@ -33,7 +33,7 @@ SSID = getenv("SSID")
 PASSWORD = getenv("PASSWORD")
 OPEN_AI_API_KEY = getenv("OPEN_AI_API_KEY")
 CHATGPT_PROMPT = const(
-    """escribe una historia corta de terror con 128 caracteres como maximo"""
+    """escribe una historia corta de terror con 128 caracteres como maximo sin utilizar acentos"""
 )
 
 
@@ -78,15 +78,20 @@ def display_response(response: str, display: SSD1306_I2C):
     font_size = 8
     formatted_text = format_text(response, display.width // font_size)
 
+    display.fill(0)
     for i, line in enumerate(formatted_text.splitlines()):
         x = 0
         y = i * font_size
         display.text(line, x, y)
+    try:
+        display.show()
+    except OSError:
+        print("Display error")
 
 
 def make_request(chatgpt_api: OpenAIRequest, display: SSD1306_I2C):
-    if chatgpt_api.waiting_for_request:
-        return
+    # if chatgpt_api.waiting_for_request:
+    #    return
 
     display_response("Waiting for response...", display)
     response = chatgpt_api.get_chatgpt_response(CHATGPT_PROMPT)
@@ -104,6 +109,7 @@ def main():
     display_response(
         "Presiona el boton para generar una historia corta de terror.", display
     )
+    display.show()
 
     new_response_button.when_pressed = lambda: make_request(chatgpt_api, display)
 

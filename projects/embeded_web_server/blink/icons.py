@@ -51,6 +51,7 @@ class AnimatedFrames:
 
     def end_animation(self) -> None:
         self._timer.deinit()
+        sleep(2)  # Waits for the last callback of the Timer to end
 
 
 # fmt: off
