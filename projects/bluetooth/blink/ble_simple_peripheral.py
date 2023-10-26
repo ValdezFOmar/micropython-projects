@@ -34,8 +34,7 @@ _UART_SERVICE = (
 
 
 class BLESimplePeripheral:
-    def __init__(self, ble, name):
-        self.name = name
+    def __init__(self, ble, name="mpy-uart"):
         self._ble = ble
         self._ble.active(True)
         self._ble.irq(self._irq)
@@ -44,7 +43,7 @@ class BLESimplePeripheral:
         )
         self._connections = set()
         self._write_callback = None
-        self._payload = advertising_payload(name=self.name, services=[_UART_UUID])
+        self._payload = advertising_payload(name=name, services=[_UART_UUID])
         self._advertise()
 
     def _irq(self, event, data):
@@ -73,7 +72,7 @@ class BLESimplePeripheral:
         return len(self._connections) > 0
 
     def _advertise(self, interval_us=500000):
-        print(f"Starting advertising")
+        print("Starting advertising")
         self._ble.gap_advertise(interval_us, adv_data=self._payload)
 
     def on_write(self, callback):
@@ -82,7 +81,7 @@ class BLESimplePeripheral:
 
 def demo():
     ble = bluetooth.BLE()
-    p = BLESimplePeripheral(ble, name="mpy-uart")
+    p = BLESimplePeripheral(ble)
 
     def on_rx(v):
         print("RX", v)

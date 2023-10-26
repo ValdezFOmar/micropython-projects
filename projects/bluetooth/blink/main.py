@@ -19,7 +19,7 @@ def on_rx(data: bytes):
 
 def main():
     ble = bluetooth.BLE()
-    sp = BLESimplePeripheral(ble, "pico-w-board")
+    sp = BLESimplePeripheral(ble)
 
     while True:
         if sp.is_connected():

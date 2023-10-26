@@ -24,11 +24,7 @@ _ADV_TYPE_APPEARANCE = const(0x19)
 
 # Generate a payload to be passed to gap_advertise(adv_data=...).
 def advertising_payload(
-    limited_disc=False,
-    br_edr=False,
-    name=None,
-    services=None,
-    appearance=0,
+    limited_disc=False, br_edr=False, name=None, services=None, appearance=0
 ):
     payload = bytearray()
 
