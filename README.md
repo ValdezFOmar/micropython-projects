@@ -22,10 +22,10 @@ python -m venv .venv
 source .venv/bin/activate
 ```
 
-Instalar los paquetes de [`requirements.txt`](./requirements.txt):
+Instalar los paquetes de [`requirements.txt`](./requirements.txt) utilizando el script [`setup.sh`](./setup.sh):
 
 ```sh
-pip install -r requirements.txt
+./setup.sh
 ```
 
 Estos paquetes permiten una mejor experiencia para programar en micorpython:
